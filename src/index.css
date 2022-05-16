@@ -1,13 +1,69 @@
+:root {
+  --text-bg: #2b3170;
+  --bg-01: #a0f8f8;
+  --bg-02: #799a52;
+}
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+h1,
+h2,
+h3,
+h4,
+h6,
+p,
+label,
+a {
+  color: var(--text-bg)!important;
+}
+.form_box {
+  height: 100vh;
+}
+.form_title {
+  font-weight: 800;
+  font-size: 2rem;
+}
+.form_box .form-block {
+  border-radius: 80px 0 80px 0;
+  border-color: var(--bg-02) !important;
+}
+.form-input label {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+.form-input input {
+  box-sizing: border-box;
+  box-shadow: none;
+  border: 1px solid var(--bg-02);
+  outline: none;
+  color: var(--text-bg);
+  font-size: 0.86rem;
+  font-weight: 500;
+}
+.form-input input::placeholder{
+  color: var(--text-bg);
+  font-size: 0.86rem;
+  font-weight: 500;
+  opacity: 0.5;
+}
+form .form-input input:focus,
+form .form-input input:focus-visible {
+  border-width: 1.5px;
+  box-shadow: 0px 1.5px 1.5px 0.5px #d8d8d8;
+}
+.form_button button {
+  background: linear-gradient(to right, var(--bg-02), var(--bg-01));
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.form_link p,
+.form_link a{
+  color: var(--text-bg);
+  font-size: 1rem;
+  font-weight: 500;
 }
