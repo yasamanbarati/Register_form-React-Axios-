@@ -1,7 +1,73 @@
-import React, { Fragment } from 'react';
+import axios from 'axios';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import validator from 'validator';
 
 const Login = () => {
+
+    //state
+    const [email, setemail] = useState('');
+    const [password, setpassword] = useState('');
+    const [data, setdata] = useState([]);
+    const [emailError, setemailError] = useState('');
+
+    //Email confirmation
+    const validateEmail = (e) => {
+        var email = e.target.value
+
+        if (validator.isEmail(email)) {
+            setemailError('Valid Email :)')
+        } else {
+            setemailError('Enter valid Email!')
+        }
+    }
+
+    // Get Data
+    const getUserData = () => {
+        axios.get('https://yasamanproject-8481b-default-rtdb.firebaseio.com/data').then(res => {
+            setdata(res.data)
+            console.log(res);
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
+    useEffect(() => {
+        getUserData()
+    }, [])
+
+    // Send Data
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const user = {
+            email : email,
+            password : password
+        }
+        if ( email.trim().length === 0 || password.trim().length === 0){
+            alert('Enter email and password')
+        }
+        else if ( password.trim().length < 8 ){
+            alert('Enter the password correctly !! (8-digit password length)')
+        }
+        else {
+            const result = data.some((item) => item.email === email && item.password === password) //true or fulse
+            
+            if (result) {
+                alert('Welcome :)')
+            }else{
+                alert('Please check the information')
+            }
+        }
+    }
+
+    const handleChangeEmail = (e) => {
+        validateEmail(e);
+        setemail(e.target.value)
+    }
+    const handleChangePass = (e) => {
+        setpassword(e.target.value)
+    }
 
     return (
         <Fragment>
@@ -18,17 +84,23 @@ const Login = () => {
                                     <input className='w-100 rounded-3 p-2'
                                         type="email"
                                         placeholder="Email Address"
-                                        autoComplete="off" />
-                                    {/* <span className="emaillError">{emailError}</span> */}
+                                        autoComplete="off"
+                                        value={email}
+                                        onChange={handleChangeEmail} />
+                                    <span className="emaillError text-danger">{emailError}</span>
                                 </div>
                                 <div className="form-input w-100 my-4">
                                     <label>password :</label>
                                     <input className='w-100 rounded-3 p-2'
                                         type="password"
-                                        placeholder="Password" />
+                                        placeholder="Password"
+                                        value={password}
+                                        onChange={handleChangePass}
+                                         />
                                 </div>
                                 <div className="form_button shadow-sm rounded-3 w-50">
-                                    <button type="submit" className="btn btn-block border-0 w-100 px-4 py-2 d-flex justify-content-center align-items-center">
+                                    <button type="submit" className="btn btn-block border-0 w-100 px-4 py-2 d-flex justify-content-center align-items-center"
+                                    onClick={handleSubmit}>
                                         Login
                                     </button>
                                 </div>
